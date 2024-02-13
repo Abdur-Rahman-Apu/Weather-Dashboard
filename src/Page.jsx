@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./Components/Header/Header";
 import WeatherBoard from "./Components/Weather/WeatherBoard";
 import ClearSkyImage from "./assets/backgrounds/clear-sky.jpg";
@@ -13,6 +13,13 @@ import { WeatherContext } from "./contexts";
 
 export default function Page() {
   const { weather, loading } = useContext(WeatherContext);
+
+  const [bgImg, setBgImg] = useState("");
+
+  useEffect(() => {
+    const climate = getBackgroundImage(weather.climate);
+    setBgImg(climate);
+  }, [weather.climate]);
 
   function getBackgroundImage(climate) {
     switch (climate) {
@@ -39,7 +46,7 @@ export default function Page() {
   return (
     <div
       style={{
-        backgroundImage: `url('${getBackgroundImage(weather.climate)}')`,
+        backgroundImage: `url('${bgImg}')`,
       }}
       className="grid place-items-center h-screen bg-no-repeat bg-cover"
     >
