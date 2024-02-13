@@ -25,7 +25,7 @@ const useWeather = () => {
 
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
-          import.meta.VITE_WEATHER_API_KEY
+          import.meta.env.VITE_WEATHER_API_KEY
         }&units=metric`
       );
 
@@ -39,7 +39,7 @@ const useWeather = () => {
       const updatedData = {
         ...weather,
         location: data?.name,
-        climate: data?.weather?.main,
+        climate: data?.weather[0]?.main,
         temperature: data?.main?.temp,
         maxTemperature: data?.main?.temp_max,
         minTemperature: data?.main?.temp_min,
